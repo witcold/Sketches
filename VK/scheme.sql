@@ -1,0 +1,6 @@
+CREATE TABLE VK (
+  ID INTEGER,
+  Fake INTEGER, --BOOLEAN
+  Firstname VARCHAR(20),
+  Lastname VARCHAR(40)
+);
