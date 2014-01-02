@@ -1,0 +1,6 @@
+CREATE TABLE Tasks (
+  ID INTEGER NOT NULL,
+  Name VARCHAR(40),
+  Started TIMESTAMP,
+  Finished TIMESTAMP
+);
