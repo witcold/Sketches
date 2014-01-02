@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Task {
 
-	int id;
+	public int id;
 
-	String name;
+	public String name;
 
-	Date started, finished;
+	public Date started, finished;
 }
