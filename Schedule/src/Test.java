@@ -1,5 +1,3 @@
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,14 +13,15 @@ import java.util.Scanner;
 
 import beans.Task;
 
-
 public class Test {
+	static String url = "jdbc:h2:tcp://localhost/D:/Repo/Schedule";
+	static String user = "dbadmin";
+	static String password = "dbpassword";
 
-	static String url = "jdbc:h2:file:D:/Repo/Schedule";
 	static SimpleDateFormat sdf = new SimpleDateFormat();
 
 	public static void select() throws SQLException {
-		Connection c = DriverManager.getConnection(url);
+		Connection c = DriverManager.getConnection(url, user, password);
 		if (c != null) {
 			PreparedStatement s = c.prepareStatement("SELECT * FROM Tasks;");
 			ResultSet rs = s.executeQuery();
@@ -32,29 +31,28 @@ public class Test {
 				t.name = rs.getString("Name");
 				t.started = rs.getTimestamp("Started");
 				t.finished = rs.getTimestamp("Finished");
-				System.out.println(t.id + " : " + t.name + " [" + sdf.format(t.started)
-						+ " , " + t.finished + " ]");
+				System.out.println(t.id + " : " + t.name + " ["
+						+ sdf.format(t.started) + " , " + t.finished + " ]");
 			}
 			c.close();
 		}
 	}
 
 	public static void insert(Task t) throws SQLException {
-		Connection c = DriverManager.getConnection(url);
+		Connection c = DriverManager.getConnection(url, user, password);
 		if (c != null) {
-			PreparedStatement p = c.prepareStatement("INSERT INTO Tasks VALUES (?, ?, ?, ?)");
+			PreparedStatement p = c
+					.prepareStatement("INSERT INTO Tasks (ID, Name, Started, Finished) VALUES (?, ?, ?, ?)");
 			p.setInt(1, t.id);
 			p.setString(2, t.name);
 			if (t.started != null) {
 				p.setTimestamp(3, new Timestamp(t.started.getTime()));
-			}
-			else {
+			} else {
 				p.setNull(3, java.sql.Types.TIMESTAMP);
 			}
 			if (t.finished != null) {
 				p.setTimestamp(4, new Timestamp(t.finished.getTime()));
-			}
-			else {
+			} else {
 				p.setNull(4, java.sql.Types.TIMESTAMP);
 			}
 			int i = p.executeUpdate();
@@ -64,9 +62,10 @@ public class Test {
 	}
 
 	public static void delete(int id) throws SQLException {
-		Connection c = DriverManager.getConnection(url);
+		Connection c = DriverManager.getConnection(url, user, password);
 		if (c != null) {
-			PreparedStatement p = c.prepareStatement("DELETE FROM Tasks WHERE ID = ?");
+			PreparedStatement p = c
+					.prepareStatement("DELETE FROM Tasks WHERE ID = ?");
 			p.setInt(1, id);
 			int i = p.executeUpdate();
 			System.out.println(i + " lines deleted");
@@ -74,7 +73,8 @@ public class Test {
 		}
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException,
+			IOException, SQLException {
 		Class.forName("org.h2.Driver");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Scanner scanner = new Scanner(System.in);
@@ -89,7 +89,10 @@ public class Test {
 				Task t = new Task();
 				t.id = scanner.nextInt();
 				t.name = br.readLine();
-				t.started = Calendar.getInstance().getTime();
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(Calendar.MILLISECOND, 0);
+				calendar.set(Calendar.SECOND, 0);
+				t.started = calendar.getTime();
 				insert(t);
 				break;
 			case "delete":
