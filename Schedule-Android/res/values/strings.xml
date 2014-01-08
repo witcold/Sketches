@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Schedule</string>
+    <string name="action_new">New</string>
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
 
