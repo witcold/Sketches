@@ -1,5 +1,5 @@
 CREATE TABLE VK (
-  ID INTEGER,
+  ID INTEGER NOT NULL,
   Fake BOOLEAN,
   Firstname VARCHAR(20),
   Lastname VARCHAR(40),
