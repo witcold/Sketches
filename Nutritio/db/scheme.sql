@@ -4,5 +4,21 @@ CREATE TABLE Products (
   Nutrition INTEGER,
   Proteins REAL,
   Fat REAL,
-  Carbohydrates REAL
+  Carbohydrates REAL,
+  Measure INTEGER NOT NULL
+);
+
+CREATE TABLE Measures (
+  ID INTEGER NOT NULL PRIMARY KEY,
+  Name VARCHAR(20),
+  Weight REAL
+);
+
+CREATE TABLE Consumption (
+  ID INTEGER NOT NULL PRIMARY KEY,
+  Year SMALLINT,
+  Month TINYINT,
+  Day TINYINT,
+  Product INTEGER NOT NULL,
+  Value REAL
 );
