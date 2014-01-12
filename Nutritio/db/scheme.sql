@@ -16,9 +16,21 @@ CREATE TABLE Measures (
 
 CREATE TABLE Consumption (
   ID INTEGER NOT NULL PRIMARY KEY,
+  --UserID
   Year SMALLINT,
   Month TINYINT,
   Day TINYINT,
   Product INTEGER NOT NULL,
   Value REAL
+);
+
+CREATE TABLE Users (
+  ID INTEGER NOT NULL PRIMARY KEY,
+  Firstname VARCHAR(20),
+  Lastname VARCHAR(40),
+  Year SMALLINT,
+  Month TINYINT,
+  Day TINYINT,
+  Height SMALLINT,
+  Weight SMALLINT
 );
